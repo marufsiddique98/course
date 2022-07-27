@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+
+    <title>Course</title>
+    
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="/css/fontawesome.css">
+    <link rel="stylesheet" href="/css/templatemo-grad-school.css">
+    <link rel="stylesheet" href="/css/owl.css">
+    <link rel="stylesheet" href="/css/lightbox.css">
+    </head>
+
+<body>
+
+   
+  <!--header-->
+  <header class="main-header clearfix" role="header">
+    <div class="logo">
+      <a href="/"><em>Course</em></a>
+    </div>
+    <a href="#menu" class="menu-link"><i class="fa fa-bars"></i></a>
+    <nav id="menu" class="main-nav" role="navigation">
+      <ul class="main-menu">
+        <li><a href="/">Home</a></li>
+        <li><a href="#section4">Courses</a></li>
+        <li><a href="#section6">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+
+  <section class="section courses" data-section="section4">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="section-heading">
+            <h2>Choose Your Course</h2>
+          </div>
+        </div>
+        <div class="row">
+          <% courses.forEach(function(c){ %>
+          <div class="col-md-3">
+            <img src=<%-c.img%> alt="Course #1">
+            <div class="down-content">
+              <a href='/lectures/<%-c.id%>'><h4 class="text-white"><%-c.name%></h4></a>
+              
+              <p class="text-white"><%-c.description%></p>
+              <div class="author-image">
+                <img src=<%-c.author_img%> height="25px" width="25px" style="border-radius:50%; margin-right:6px;" alt="Author 1">
+                <span class="text-white"><%-c.author%></span>
+                <a href='/lectures/<%-c.id%>'>Buy <i class="fa fa-angle-double-right"></i></a>
+              </div>
+            </div>
+          </div>
+          <% }); %>
+
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <p><i class="fa fa-copyright"></i> Copyright 2020 by courses.com
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <!-- Bootstrap core JavaScript -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/js/isotope.min.js"></script>
+    <script src="/js/owl-carousel.js"></script>
+    <script src="/js/lightbox.js"></script>
+    <script src="/js/tabs.js"></script>
+    <script src="/js/video.js"></script>
+    <script src="/js/slick-slider.js"></script>
+    <script src="/js/custom.js"></script>
+    <script>
+        $('.nav li:first').addClass('active');
+
+        var showSection = function showSection(section, isAnimate) {
+          var
+          direction = section.replace(/#/, ''),
+          reqSection = $('.section').filter('[data-section="' + direction + '"]'),
+          reqSectionPos = reqSection.offset().top - 0;
+
+          if (isAnimate) {
+            $('body, html').animate({
+              scrollTop: reqSectionPos },
+            800);
+          } else {
+            $('body, html').scrollTop(reqSectionPos);
+          }
+
+        };
+
+        var checkSection = function checkSection() {
+          $('.section').each(function () {
+            var
+            $this = $(this),
+            topEdge = $this.offset().top - 80,
+            bottomEdge = topEdge + $this.height(),
+            wScroll = $(window).scrollTop();
+            if (topEdge < wScroll && bottomEdge > wScroll) {
+              var
+              currentId = $this.data('section'),
+              reqLink = $('a').filter('[href*=\\#' + currentId + ']');
+              reqLink.closest('li').addClass('active').
+              siblings().removeClass('active');
+            }
+          });
+        };
+
+        $('.main-menu, .scroll-to-section').on('click', 'a', function (e) {
+          if($(e.target).hasClass('external')) {
+            return;
+          }
+          e.preventDefault();
+          $('#menu').removeClass('active');
+          showSection($(this).attr('href'), true);
+        });
+
+        $(window).scroll(function () {
+          checkSection();
+        });
+    </script>
+</body>
+</html>
