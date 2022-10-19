@@ -9,7 +9,7 @@ mysql.createConnection({
     host:'localhost',
     user:'root',
     password:'',
-    database:'boutique'
+    database:'course'
 });
 
 var app=express();
@@ -85,5 +85,32 @@ app.get('/lectures/:id',function(req,res){
             });
         });
     });
-});
+} );
 
+
+app.get('/course/:id',requiresAuth,(req,res)=>{
+    var id=req.params.id;
+    con.query(`SELECT * FROM course WHERE id=${id}`,(e,result)=>{
+        if(e){
+            res.send(e) 
+            return
+        }
+        res.render('pages/buy',{
+            product:result[0],
+            user_id:req.session.userid
+        });
+    });
+})
+
+app.post('/buy-confirm',requiresAuth,(req,res)=>{
+    var id=req.body.id;
+    var acc=req.body.acc;
+    var trans=req.body.trans;
+    con.query(`INSERT INTO buy(user_id,trans,account,course_id) VALUES('1','${trans}','${acc}','${id}')`,(e,r)=>{
+        if(e){
+            res.send(e)
+            return
+        }
+        res.render('pages/buy-confirm');
+    })
+})
